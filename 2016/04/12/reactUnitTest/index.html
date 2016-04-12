@@ -1,0 +1,875 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="react," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="CP的生活日志" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="当面对现在流行的React+Redux创建的Web应用时，该如何用Mocha+Chai进行测试？
+搭建测试基础框架为了搭建搭建框架，我们需要做以下几个事：
+
+设置一个类浏览器的命令行测试环境
+创建一个‘renderComponent’函数来render react class
+模拟事件simulating events
+设置chai-jquery
+
+下面详细解释这几个事情">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用Mocha + chai做React + Redux的单元测试">
+<meta property="og:url" content="http://chengpeng.me/2016/04/12/reactUnitTest/index.html">
+<meta property="og:site_name" content="CP的生活日志">
+<meta property="og:description" content="当面对现在流行的React+Redux创建的Web应用时，该如何用Mocha+Chai进行测试？
+搭建测试基础框架为了搭建搭建框架，我们需要做以下几个事：
+
+设置一个类浏览器的命令行测试环境
+创建一个‘renderComponent’函数来render react class
+模拟事件simulating events
+设置chai-jquery
+
+下面详细解释这几个事情">
+<meta property="og:updated_time" content="2016-04-12T14:39:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用Mocha + chai做React + Redux的单元测试">
+<meta name="twitter:description" content="当面对现在流行的React+Redux创建的Web应用时，该如何用Mocha+Chai进行测试？
+搭建测试基础框架为了搭建搭建框架，我们需要做以下几个事：
+
+设置一个类浏览器的命令行测试环境
+创建一个‘renderComponent’函数来render react class
+模拟事件simulating events
+设置chai-jquery
+
+下面详细解释这几个事情">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 用Mocha + chai做React + Redux的单元测试 | CP的生活日志 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?2250a0234e78e18927544f458bb9c5e3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">CP的生活日志</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">-生活-技术-兴趣-</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+      
+        <li class="menu-item menu-item-search">
+          <a href="#" class="st-search-show-outputs">
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'Nnzz9_uyR5DrNsRzLcUE','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                用Mocha + chai做React + Redux的单元测试
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-12T18:47:32+08:00" content="2016-04-12">
+              2016-04-12
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/12/reactUnitTest/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/12/reactUnitTest/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>当面对现在流行的React+Redux创建的Web应用时，该如何用Mocha+Chai进行测试？</p>
+<h2 id="搭建测试基础框架"><a href="#搭建测试基础框架" class="headerlink" title="搭建测试基础框架"></a>搭建测试基础框架</h2><p>为了搭建搭建框架，我们需要做以下几个事：</p>
+<ol>
+<li>设置一个类浏览器的命令行测试环境</li>
+<li>创建一个‘renderComponent’函数来render react class</li>
+<li>模拟事件simulating events</li>
+<li>设置chai-jquery</li>
+</ol>
+<p>下面详细解释这几个事情</p>
+<a id="more"></a>
+<h3 id="搭建一个类浏览器的命令行测试环境"><a href="#搭建一个类浏览器的命令行测试环境" class="headerlink" title="搭建一个类浏览器的命令行测试环境"></a>搭建一个类浏览器的命令行测试环境</h3><p>使用自动化工具(Webpack,browserify)构建出来的web应用，几乎所有的内容都浓缩在bundle.js里了。<br>不同于浏览器，terminal环境要解析Ract中的DOM，以及一些全局变量就需要工具了，</p>
+<p>这里我们采用<a href="https://github.com/tmpvar/jsdom" target="_blank" rel="external">jsdom</a>来模拟DOM结构。<br>再将这个DOM结构封装成jquery对象。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jsdom <span class="keyword">from</span> <span class="string">'jsdom'</span>;</span><br><span class="line"><span class="keyword">import</span> jquery <span class="keyword">from</span> <span class="string">'jquery'</span>;</span><br><span class="line"></span><br><span class="line">global.document = jsdom.jsdom(<span class="string">'&lt;!doctype html&gt;&lt;html&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;'</span>);</span><br><span class="line">global.window = global.document.defaultView;</span><br><span class="line"><span class="keyword">const</span> $ = jquery(global.window);</span><br></pre></td></tr></table></figure></p>
+<h3 id="创建一个‘renderComponent’函数来render-react-class"><a href="#创建一个‘renderComponent’函数来render-react-class" class="headerlink" title="创建一个‘renderComponent’函数来render react class"></a>创建一个‘renderComponent’函数来render react class</h3><p>写React应用时最常用的方法render就是将React的组件渲染成DOM（或者虚拟DOM），所以在测试之前，我们创建一个renderComponent方法，将React的组件渲染出来。</p>
+<p>用ReactTestUtils的<strong>renderIntoDocument</strong>方法，将一个组件渲染成DOM node。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ReactComponent renderIntoDocument(</span><br><span class="line">  ReactElement instance</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>当我们使用Redux的时候，需要用Provider来渲染组件，参数分别为组件的props和Redux的state（store），因为Redux只有一个store，所以使用起来还是比较方便的。<br>生成的组件instance用findDOMNode方法获取真实DOM节点，并绑定成jquery对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> TestUtils <span class="keyword">from</span> <span class="string">'react-addons-test-utils'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Provider &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; createStore &#125; <span class="keyword">from</span> <span class="string">'redux'</span>;</span><br><span class="line"><span class="keyword">import</span> reducers <span class="keyword">from</span> <span class="string">'../src/reducers'</span>;  <span class="comment">//这里路径定义到自己的reducer文件夹</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">renderComponent</span>(<span class="params">ComponentClass, props, state</span>) </span>&#123;</span><br><span class="line"><span class="comment">// React Add-Ons : renderIntoDocument </span></span><br><span class="line">  <span class="keyword">const</span> componentInstance = TestUtils.renderIntoDocument(</span><br><span class="line">    &lt;Provider store=&#123;createStore(reducers, state)&#125;&gt;</span><br><span class="line">      &lt;ComponentClass &#123;...props&#125; /&gt;</span><br><span class="line">    &lt;/Provider&gt;</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  return $(ReactDOM.findDOMNode(componentInstance)); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样，通过renderComponent方法，就可以将一个react组件转换成dom节点并返回。</p>
+<h3 id="模拟事件simulating-events"><a href="#模拟事件simulating-events" class="headerlink" title="模拟事件simulating events"></a>模拟事件simulating events</h3><p>有时候，我们需要模拟一些事件来满足我们的测试需求，例如点击button，按下键盘，输入文字等。<br>这部分我们用ReactTestUtils的[simulate][<a href="https://facebook.github.io/react/docs/test-utils.html]方法来实现。" target="_blank" rel="external">https://facebook.github.io/react/docs/test-utils.html]方法来实现。</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$.fn.simulate = <span class="function"><span class="keyword">function</span>(<span class="params">eventName, value</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (value) &#123;</span><br><span class="line">    <span class="keyword">this</span>.val(value);</span><br><span class="line">  &#125;</span><br><span class="line">  TestUtils.Simulate[eventName](<span class="keyword">this</span>[<span class="number">0</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="设置chai-jquery"><a href="#设置chai-jquery" class="headerlink" title="设置chai-jquery"></a>设置chai-jquery</h3><p>设置一下[chai-jquery][<a href="https://github.com/chaijs/chai-jquery],具体参看官方网页。" target="_blank" rel="external">https://github.com/chaijs/chai-jquery],具体参看官方网页。</a><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> chai, &#123; expect &#125; <span class="keyword">from</span> <span class="string">'chai'</span>;</span><br><span class="line"><span class="keyword">import</span> chaiJquery <span class="keyword">from</span> <span class="string">'chai-jquery'</span>;</span><br><span class="line">chaiJquery(chai, chai.util, $);</span><br></pre></td></tr></table></figure></p>
+<h3 id="export方法"><a href="#export方法" class="headerlink" title="export方法"></a>export方法</h3><p>最后不要忘了把renderComponent和chai的expect export出去<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123; renderComponent, expect &#125;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="test-helper-js"><a href="#test-helper-js" class="headerlink" title="test_helper.js"></a>test_helper.js</h3><p>以上内容可以合成到一个js文件中<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jsdom <span class="keyword">from</span> <span class="string">'jsdom'</span>;</span><br><span class="line"><span class="keyword">import</span> jquery <span class="keyword">from</span> <span class="string">'jquery'</span>;</span><br><span class="line"><span class="keyword">import</span> TestUtils <span class="keyword">from</span> <span class="string">'react-addons-test-utils'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line"><span class="keyword">import</span> chai, &#123; expect &#125; <span class="keyword">from</span> <span class="string">'chai'</span>;</span><br><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Provider &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; createStore &#125; <span class="keyword">from</span> <span class="string">'redux'</span>;</span><br><span class="line"><span class="keyword">import</span> reducers <span class="keyword">from</span> <span class="string">'../src/reducers'</span>; </span><br><span class="line"><span class="keyword">import</span> chaiJquery <span class="keyword">from</span> <span class="string">'chai-jquery'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置一个类浏览器的命令行测试环境</span></span><br><span class="line">global.document = jsdom.jsdom(<span class="string">'&lt;!doctype html&gt;&lt;html&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;'</span>);</span><br><span class="line">global.window = global.document.defaultView;</span><br><span class="line"><span class="keyword">const</span> $ = jquery(global.window);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个‘renderComponent’函数来render react class</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">renderComponent</span>(<span class="params">ComponentClass, props, state</span>) </span>&#123;</span><br><span class="line"><span class="comment">// React Add-Ons : renderIntoDocument </span></span><br><span class="line">  <span class="keyword">const</span> componentInstance = TestUtils.renderIntoDocument(</span><br><span class="line">    &lt;Provider store=&#123;createStore(reducers, state)&#125;&gt;</span><br><span class="line">      &lt;ComponentClass &#123;...props&#125; /&gt;</span><br><span class="line">    &lt;/Provider&gt;</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  return $(ReactDOM.findDOMNode(componentInstance)); </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 模拟事件simulating events</span><br><span class="line">$.fn.simulate = function(eventName, value) &#123;</span><br><span class="line">  if (value) &#123;</span><br><span class="line">    this.val(value);</span><br><span class="line">  &#125;</span><br><span class="line">  TestUtils.Simulate[eventName](this[0]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// set up chai-jquery</span><br><span class="line">chaiJquery(chai, chai.util, $);</span><br><span class="line"></span><br><span class="line">export &#123; renderComponent, expect &#125;;</span><br></pre></td></tr></table></figure></p>
+<h2 id="如何使用test-helper-js"><a href="#如何使用test-helper-js" class="headerlink" title="如何使用test_helper.js"></a>如何使用test_helper.js</h2><p>说了半天只不过写了一个测试工具框架而已，下面说说怎么使用这个工具。</p>
+<p>假设我们有一个评论APP，有一个评论框，下面是评论列表<br><strong>APP</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> CommentBox <span class="keyword">from</span> <span class="string">'./comment_box'</span>;</span><br><span class="line"><span class="keyword">import</span> CommentList <span class="keyword">from</span> <span class="string">'./comment_list'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">          &lt;CommentBox /&gt;</span><br><span class="line">          &lt;CommentList /&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>测试案例</strong></p>
+<ol>
+<li>有一个comment box （这里检查是否包含comment-box class）</li>
+<li>有一个comment list （这里检查是否包含comment-list class)<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; renderComponent, expect &#125; <span class="keyword">from</span> <span class="string">'../test_helper'</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'../../src/components/app'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用describe把相似的测试结合起来</span></span><br><span class="line">describe(<span class="string">'App'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> component;</span><br><span class="line">    </span><br><span class="line">    beforeEach(() =&gt; &#123;</span><br><span class="line">        component = renderComponent(App);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用it测试一个目标的一个行为</span></span><br><span class="line">    it(<span class="string">'shows a comment box'</span>, () =&gt; &#123;</span><br><span class="line">        <span class="comment">// 使用expect断言一个目标</span></span><br><span class="line">        expect(component.find(<span class="string">'.comment-box'</span>)).to.exist;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    it(<span class="string">'shows a comment list'</span>, () =&gt; &#123;</span><br><span class="line">        expect(component.find(<span class="string">'.comment-list'</span>)).to.exist;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>再做一个CommentBox的测试案例：</p>
+<ol>
+<li>有一个textarea</li>
+<li>有一个button</li>
+<li>在textarea中显示输入的文字</li>
+<li>当提交后清空textarea</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; renderComponent, expect &#125; <span class="keyword">from</span> <span class="string">'../test_helper'</span>;</span><br><span class="line"><span class="keyword">import</span> CommentBox <span class="keyword">from</span> <span class="string">'../../src/components/comment_box'</span>;</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'CommentBox'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> component;</span><br><span class="line"></span><br><span class="line">    beforeEach(() =&gt; &#123;</span><br><span class="line">        component = renderComponent(CommentBox);</span><br><span class="line">    &#125;); </span><br><span class="line"></span><br><span class="line">    it(<span class="string">'has a text area'</span>, () =&gt; &#123;</span><br><span class="line">        expect(component.find(<span class="string">'textarea'</span>)).to.exist;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    it(<span class="string">'has a button'</span>, () =&gt; &#123;</span><br><span class="line">        expect(component.find(<span class="string">'button'</span>)).to.exist;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    describe(<span class="string">'entering some text'</span>, () =&gt; &#123;</span><br><span class="line">        beforeEach(() =&gt; &#123;</span><br><span class="line">            component.find(<span class="string">'textarea'</span>).simulate(<span class="string">'change'</span>, <span class="string">'new comment'</span>);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        it(<span class="string">'shows text that is entered'</span>, () =&gt; &#123;</span><br><span class="line">            expect(component.find(<span class="string">'textarea'</span>)).to.have.value(<span class="string">'new comment'</span>);</span><br><span class="line">            </span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        it(<span class="string">'when submitted, clears the input'</span>, () =&gt; &#123;</span><br><span class="line">            component.simulate(<span class="string">'submit'</span>);</span><br><span class="line">            expect(component.find(<span class="string">'textarea'</span>)).to.have.value(<span class="string">''</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="如何跑测试"><a href="#如何跑测试" class="headerlink" title="如何跑测试"></a>如何跑测试</h2><p>在package.json的script中添加测试命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;test&quot;: &quot;mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test&quot;,</span><br><span class="line">&quot;test:watch&quot;: &quot;npm run test -- --watch&quot;</span><br></pre></td></tr></table></figure></p>
+<p>需要测试的时候<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run test:watch</span><br></pre></td></tr></table></figure></p>
+<p>就可以了。</p>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/react/" rel="tag">#react</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/08/mpv/" rel="next" title="新一代视频播放器：MPV">
+                <i class="fa fa-chevron-left"></i> 新一代视频播放器：MPV
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/04/12/reactUnitTest/"
+     data-title="用Mocha + chai做React + Redux的单元测试"
+     data-content=""
+     data-url="http://chengpeng.me/2016/04/12/reactUnitTest/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/04/12/reactUnitTest/"
+           data-title="用Mocha + chai做React + Redux的单元测试" data-url="http://chengpeng.me/2016/04/12/reactUnitTest/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="Peng Cheng" />
+          <p class="site-author-name" itemprop="name">Peng Cheng</p>
+          <p class="site-description motion-element" itemprop="description">不要成为自己反对的那种人</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+          
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chengandpeng" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> github
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/chengandpeng" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> twitter
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chengpeng818" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> weibo
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.douban.com/people/chengandpeng/" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> douban
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/cheng-peng-90" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> zhihu
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建测试基础框架"><span class="nav-number">1.</span> <span class="nav-text">搭建测试基础框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#搭建一个类浏览器的命令行测试环境"><span class="nav-number">1.1.</span> <span class="nav-text">搭建一个类浏览器的命令行测试环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建一个‘renderComponent’函数来render-react-class"><span class="nav-number">1.2.</span> <span class="nav-text">创建一个‘renderComponent’函数来render react class</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模拟事件simulating-events"><span class="nav-number">1.3.</span> <span class="nav-text">模拟事件simulating events</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置chai-jquery"><span class="nav-number">1.4.</span> <span class="nav-text">设置chai-jquery</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#export方法"><span class="nav-number">1.5.</span> <span class="nav-text">export方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#test-helper-js"><span class="nav-number">1.6.</span> <span class="nav-text">test_helper.js</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何使用test-helper-js"><span class="nav-number">2.</span> <span class="nav-text">如何使用test_helper.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何跑测试"><span class="nav-number">3.</span> <span class="nav-text">如何跑测试</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Peng Cheng</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chengandpeng"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+
+</body>
+</html>
