@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="react," />
+  <meta name="keywords" content="React," />
 
 
 
@@ -81,7 +81,7 @@
 设置chai-jquery
 
 下面详细解释这几个事情">
-<meta property="og:updated_time" content="2016-04-12T14:39:11.000Z">
+<meta property="og:updated_time" content="2016-04-13T02:19:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用Mocha + chai做React + Redux的单元测试">
 <meta name="twitter:description" content="当面对现在流行的React+Redux创建的Web应用时，该如何用Mocha+Chai进行测试？
@@ -296,6 +296,25 @@
           </span>
 
           
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/React/" itemprop="url" rel="index">
+                    <span itemprop="name">React</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
 
           
             
@@ -340,9 +359,9 @@
 <p>当我们使用Redux的时候，需要用Provider来渲染组件，参数分别为组件的props和Redux的state（store），因为Redux只有一个store，所以使用起来还是比较方便的。<br>生成的组件instance用findDOMNode方法获取真实DOM节点，并绑定成jquery对象。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> TestUtils <span class="keyword">from</span> <span class="string">'react-addons-test-utils'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Provider &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; createStore &#125; <span class="keyword">from</span> <span class="string">'redux'</span>;</span><br><span class="line"><span class="keyword">import</span> reducers <span class="keyword">from</span> <span class="string">'../src/reducers'</span>;  <span class="comment">//这里路径定义到自己的reducer文件夹</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">renderComponent</span>(<span class="params">ComponentClass, props, state</span>) </span>&#123;</span><br><span class="line"><span class="comment">// React Add-Ons : renderIntoDocument </span></span><br><span class="line">  <span class="keyword">const</span> componentInstance = TestUtils.renderIntoDocument(</span><br><span class="line">    &lt;Provider store=&#123;createStore(reducers, state)&#125;&gt;</span><br><span class="line">      &lt;ComponentClass &#123;...props&#125; /&gt;</span><br><span class="line">    &lt;/Provider&gt;</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  return $(ReactDOM.findDOMNode(componentInstance)); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这样，通过renderComponent方法，就可以将一个react组件转换成dom节点并返回。</p>
-<h3 id="模拟事件simulating-events"><a href="#模拟事件simulating-events" class="headerlink" title="模拟事件simulating events"></a>模拟事件simulating events</h3><p>有时候，我们需要模拟一些事件来满足我们的测试需求，例如点击button，按下键盘，输入文字等。<br>这部分我们用ReactTestUtils的[simulate][<a href="https://facebook.github.io/react/docs/test-utils.html]方法来实现。" target="_blank" rel="external">https://facebook.github.io/react/docs/test-utils.html]方法来实现。</a></p>
+<h3 id="模拟事件simulating-events"><a href="#模拟事件simulating-events" class="headerlink" title="模拟事件simulating events"></a>模拟事件simulating events</h3><p>有时候，我们需要模拟一些事件来满足我们的测试需求，例如点击button，按下键盘，输入文字等。<br>这部分我们用ReactTestUtils的<a href="https://facebook.github.io/react/docs/test-utils.html" target="_blank" rel="external">simulate</a>方法来实现。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$.fn.simulate = <span class="function"><span class="keyword">function</span>(<span class="params">eventName, value</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (value) &#123;</span><br><span class="line">    <span class="keyword">this</span>.val(value);</span><br><span class="line">  &#125;</span><br><span class="line">  TestUtils.Simulate[eventName](<span class="keyword">this</span>[<span class="number">0</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="设置chai-jquery"><a href="#设置chai-jquery" class="headerlink" title="设置chai-jquery"></a>设置chai-jquery</h3><p>设置一下[chai-jquery][<a href="https://github.com/chaijs/chai-jquery],具体参看官方网页。" target="_blank" rel="external">https://github.com/chaijs/chai-jquery],具体参看官方网页。</a><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> chai, &#123; expect &#125; <span class="keyword">from</span> <span class="string">'chai'</span>;</span><br><span class="line"><span class="keyword">import</span> chaiJquery <span class="keyword">from</span> <span class="string">'chai-jquery'</span>;</span><br><span class="line">chaiJquery(chai, chai.util, $);</span><br></pre></td></tr></table></figure></p>
+<h3 id="设置chai-jquery"><a href="#设置chai-jquery" class="headerlink" title="设置chai-jquery"></a>设置chai-jquery</h3><p>设置一下<a href="https://github.com/chaijs/chai-jquery" target="_blank" rel="external">chai-jquery</a>,具体参看官方网页。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> chai, &#123; expect &#125; <span class="keyword">from</span> <span class="string">'chai'</span>;</span><br><span class="line"><span class="keyword">import</span> chaiJquery <span class="keyword">from</span> <span class="string">'chai-jquery'</span>;</span><br><span class="line">chaiJquery(chai, chai.util, $);</span><br></pre></td></tr></table></figure></p>
 <h3 id="export方法"><a href="#export方法" class="headerlink" title="export方法"></a>export方法</h3><p>最后不要忘了把renderComponent和chai的expect export出去<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123; renderComponent, expect &#125;;</span><br></pre></td></tr></table></figure></p>
 <h3 id="test-helper-js"><a href="#test-helper-js" class="headerlink" title="test_helper.js"></a>test_helper.js</h3><p>以上内容可以合成到一个js文件中<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jsdom <span class="keyword">from</span> <span class="string">'jsdom'</span>;</span><br><span class="line"><span class="keyword">import</span> jquery <span class="keyword">from</span> <span class="string">'jquery'</span>;</span><br><span class="line"><span class="keyword">import</span> TestUtils <span class="keyword">from</span> <span class="string">'react-addons-test-utils'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line"><span class="keyword">import</span> chai, &#123; expect &#125; <span class="keyword">from</span> <span class="string">'chai'</span>;</span><br><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Provider &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; createStore &#125; <span class="keyword">from</span> <span class="string">'redux'</span>;</span><br><span class="line"><span class="keyword">import</span> reducers <span class="keyword">from</span> <span class="string">'../src/reducers'</span>; </span><br><span class="line"><span class="keyword">import</span> chaiJquery <span class="keyword">from</span> <span class="string">'chai-jquery'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置一个类浏览器的命令行测试环境</span></span><br><span class="line">global.document = jsdom.jsdom(<span class="string">'&lt;!doctype html&gt;&lt;html&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;'</span>);</span><br><span class="line">global.window = global.document.defaultView;</span><br><span class="line"><span class="keyword">const</span> $ = jquery(global.window);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个‘renderComponent’函数来render react class</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">renderComponent</span>(<span class="params">ComponentClass, props, state</span>) </span>&#123;</span><br><span class="line"><span class="comment">// React Add-Ons : renderIntoDocument </span></span><br><span class="line">  <span class="keyword">const</span> componentInstance = TestUtils.renderIntoDocument(</span><br><span class="line">    &lt;Provider store=&#123;createStore(reducers, state)&#125;&gt;</span><br><span class="line">      &lt;ComponentClass &#123;...props&#125; /&gt;</span><br><span class="line">    &lt;/Provider&gt;</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  return $(ReactDOM.findDOMNode(componentInstance)); </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 模拟事件simulating events</span><br><span class="line">$.fn.simulate = function(eventName, value) &#123;</span><br><span class="line">  if (value) &#123;</span><br><span class="line">    this.val(value);</span><br><span class="line">  &#125;</span><br><span class="line">  TestUtils.Simulate[eventName](this[0]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// set up chai-jquery</span><br><span class="line">chaiJquery(chai, chai.util, $);</span><br><span class="line"></span><br><span class="line">export &#123; renderComponent, expect &#125;;</span><br></pre></td></tr></table></figure></p>
 <h2 id="如何使用test-helper-js"><a href="#如何使用test-helper-js" class="headerlink" title="如何使用test_helper.js"></a>如何使用test_helper.js</h2><p>说了半天只不过写了一个测试工具框架而已，下面说说怎么使用这个工具。</p>
@@ -372,7 +391,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/react/" rel="tag">#react</a>
+            <a href="/tags/React/" rel="tag">#React</a>
           
         </div>
       
@@ -489,7 +508,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -498,7 +517,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
