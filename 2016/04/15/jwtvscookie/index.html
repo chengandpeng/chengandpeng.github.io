@@ -75,7 +75,7 @@ Cookie-Based Authentication:最常用的是利用cookie来存储认证信息，�
 Token-Based Authentication:本文主要介绍的Token为基础的认证方式。
 
 Json Web Token(JWT)JWT是一">
-<meta property="og:updated_time" content="2016-04-15T08:34:58.000Z">
+<meta property="og:updated_time" content="2016-04-15T08:37:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈使用Json Web Token和Cookie的利弊">
 <meta name="twitter:description" content="Authentication现在基本上有两种不同的方式来处理服务器端的认证（Authentication）问题。
@@ -320,6 +320,7 @@ Json Web Token(JWT)JWT是一">
 <li>Token-Based Authentication:本文主要介绍的Token为基础的认证方式。</li>
 </ol>
 <h2 id="Json-Web-Token-JWT"><a href="#Json-Web-Token-JWT" class="headerlink" title="Json Web Token(JWT)"></a>Json Web Token(JWT)</h2><p>JWT是一个以JSON为基准的标准规范，通过JSON来传递消息，具体定义可以参见<a href="http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html" target="_blank" rel="external">这里</a><br>JWT自身会携带所有的信息，包括payload和signature。<br>JWT常常通过HTTP的header来传送信息，同时也可以通过URL来传送。</p>
+<a id="more"></a>
 <p><strong>JWT的构成</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">header.payload.signature</span><br></pre></td></tr></table></figure></p>
 <h3 id="Header"><a href="#Header" class="headerlink" title="Header"></a>Header</h3><p>Header包含2部分。<br>typ定义类型为JWT，alg定义加密类型为HS256<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"typ"</span>:<span class="string">"JWT"</span>,</span><br><span class="line">    <span class="attr">"alg"</span>:<span class="string">"HS256"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>通过<a href="https://zh.wikipedia.org/wiki/Base64" target="_blank" rel="external">Base64</a>的转化得到第一部分<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9</span><br></pre></td></tr></table></figure></p>

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://chengpeng.me/"/>
-  <updated>2016-04-15T08:34:58.000Z</updated>
+  <updated>2016-04-15T08:37:00.000Z</updated>
   <id>http://chengpeng.me/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://chengpeng.me/2016/04/15/jwtvscookie/"/>
     <id>http://chengpeng.me/2016/04/15/jwtvscookie/</id>
     <published>2016-04-15T07:32:48.000Z</published>
-    <updated>2016-04-15T08:34:58.000Z</updated>
+    <updated>2016-04-15T08:37:00.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;Authentication&quot;&gt;&lt;a href=&quot;#Authentication&quot; class=&quot;headerlink&quot; title=&quot;Authentication&quot;&gt;&lt;/a&gt;Authentication&lt;/h2&gt;&lt;p&gt;现在基本上有两种不同的方式来处理服务器端的认证（Authentication）问题。&lt;/p&gt;
 &lt;ol&gt;
@@ -28,6 +28,7 @@
 &lt;li&gt;Token-Based Authentication:本文主要介绍的Token为基础的认证方式。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&quot;Json-Web-Token-JWT&quot;&gt;&lt;a href=&quot;#Json-Web-Token-JWT&quot; class=&quot;headerlink&quot; title=&quot;Json Web Token(JWT)&quot;&gt;&lt;/a&gt;Json Web Token(JWT)&lt;/h2&gt;&lt;p&gt;JWT是一个以JSON为基准的标准规范，通过JSON来传递消息，具体定义可以参见&lt;a href=&quot;http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;&lt;br&gt;JWT自身会携带所有的信息，包括payload和signature。&lt;br&gt;JWT常常通过HTTP的header来传送信息，同时也可以通过URL来传送。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;p&gt;&lt;strong&gt;JWT的构成&lt;/strong&gt;&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;header.payload.signature&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;h3 id=&quot;Header&quot;&gt;&lt;a href=&quot;#Header&quot; class=&quot;headerlink&quot; title=&quot;Header&quot;&gt;&lt;/a&gt;Header&lt;/h3&gt;&lt;p&gt;Header包含2部分。&lt;br&gt;typ定义类型为JWT，alg定义加密类型为HS256&lt;br&gt;&lt;figure class=&quot;highlight json&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;&quot;typ&quot;&lt;/span&gt;:&lt;span class=&quot;string&quot;&gt;&quot;JWT&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;&quot;alg&quot;&lt;/span&gt;:&lt;span class=&quot;string&quot;&gt;&quot;HS256&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;通过&lt;a href=&quot;https://zh.wikipedia.org/wiki/Base64&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Base64&lt;/a&gt;的转化得到第一部分&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
@@ -48,7 +49,12 @@
     
     <summary type="html">
     
-      &lt;h2 id=&quot;Authentication&quot;&gt;&lt;a href=&quot;#Authentication&quot; class=&quot;headerlink&quot; title=&quot;Authentication&quot;&gt;&lt;/a&gt;Authentication&lt;/h2&gt;&lt;p&gt;现在基本上有两种不同的方式来处理服务器端的认
+      &lt;h2 id=&quot;Authentication&quot;&gt;&lt;a href=&quot;#Authentication&quot; class=&quot;headerlink&quot; title=&quot;Authentication&quot;&gt;&lt;/a&gt;Authentication&lt;/h2&gt;&lt;p&gt;现在基本上有两种不同的方式来处理服务器端的认证（Authentication）问题。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Cookie-Based Authentication:最常用的是利用cookie来存储认证信息，并包含在发送请求中用于服务器端的核查&lt;/li&gt;
+&lt;li&gt;Token-Based Authentication:本文主要介绍的Token为基础的认证方式。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;Json-Web-Token-JWT&quot;&gt;&lt;a href=&quot;#Json-Web-Token-JWT&quot; class=&quot;headerlink&quot; title=&quot;Json Web Token(JWT)&quot;&gt;&lt;/a&gt;Json Web Token(JWT)&lt;/h2&gt;&lt;p&gt;JWT是一个以JSON为基准的标准规范，通过JSON来传递消息，具体定义可以参见&lt;a href=&quot;http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html&quot;&gt;这里&lt;/a&gt;&lt;br&gt;JWT自身会携带所有的信息，包括payload和signature。&lt;br&gt;JWT常常通过HTTP的header来传送信息，同时也可以通过URL来传送。&lt;/p&gt;
     
     </summary>
     
