@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://chengpeng.me/"/>
-  <updated>2016-04-13T02:19:03.000Z</updated>
+  <updated>2016-04-15T08:34:58.000Z</updated>
   <id>http://chengpeng.me/</id>
   
   <author>
@@ -14,6 +14,46 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>浅谈使用Json Web Token和Cookie的利弊</title>
+    <link href="http://chengpeng.me/2016/04/15/jwtvscookie/"/>
+    <id>http://chengpeng.me/2016/04/15/jwtvscookie/</id>
+    <published>2016-04-15T07:32:48.000Z</published>
+    <updated>2016-04-15T08:34:58.000Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;Authentication&quot;&gt;&lt;a href=&quot;#Authentication&quot; class=&quot;headerlink&quot; title=&quot;Authentication&quot;&gt;&lt;/a&gt;Authentication&lt;/h2&gt;&lt;p&gt;现在基本上有两种不同的方式来处理服务器端的认证（Authentication）问题。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Cookie-Based Authentication:最常用的是利用cookie来存储认证信息，并包含在发送请求中用于服务器端的核查&lt;/li&gt;
+&lt;li&gt;Token-Based Authentication:本文主要介绍的Token为基础的认证方式。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;Json-Web-Token-JWT&quot;&gt;&lt;a href=&quot;#Json-Web-Token-JWT&quot; class=&quot;headerlink&quot; title=&quot;Json Web Token(JWT)&quot;&gt;&lt;/a&gt;Json Web Token(JWT)&lt;/h2&gt;&lt;p&gt;JWT是一个以JSON为基准的标准规范，通过JSON来传递消息，具体定义可以参见&lt;a href=&quot;http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;&lt;br&gt;JWT自身会携带所有的信息，包括payload和signature。&lt;br&gt;JWT常常通过HTTP的header来传送信息，同时也可以通过URL来传送。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;JWT的构成&lt;/strong&gt;&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;header.payload.signature&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h3 id=&quot;Header&quot;&gt;&lt;a href=&quot;#Header&quot; class=&quot;headerlink&quot; title=&quot;Header&quot;&gt;&lt;/a&gt;Header&lt;/h3&gt;&lt;p&gt;Header包含2部分。&lt;br&gt;typ定义类型为JWT，alg定义加密类型为HS256&lt;br&gt;&lt;figure class=&quot;highlight json&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;&quot;typ&quot;&lt;/span&gt;:&lt;span class=&quot;string&quot;&gt;&quot;JWT&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;&quot;alg&quot;&lt;/span&gt;:&lt;span class=&quot;string&quot;&gt;&quot;HS256&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;通过&lt;a href=&quot;https://zh.wikipedia.org/wiki/Base64&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Base64&lt;/a&gt;的转化得到第一部分&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h3 id=&quot;Payload&quot;&gt;&lt;a href=&quot;#Payload&quot; class=&quot;headerlink&quot; title=&quot;Payload&quot;&gt;&lt;/a&gt;Payload&lt;/h3&gt;&lt;p&gt;这部分由我们需要发送的数据内容构成&lt;br&gt;&lt;figure class=&quot;highlight json&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;&quot;iss&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;chengpeng.me&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;&quot;exp&quot;&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;144444444&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;&quot;user&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;CP&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;&quot;email&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;chengandpeng@gmail.com&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;br&gt;&lt;strong&gt;iss&lt;/strong&gt;: token的发行者&lt;br&gt;&lt;strong&gt;exp&lt;/strong&gt;: 过期时间，必须在现在时间之后&lt;br&gt;其他一些声明&lt;br&gt;&lt;strong&gt;sub&lt;/strong&gt;: token的主题&lt;br&gt;&lt;strong&gt;aud&lt;/strong&gt;: token的接受者&lt;br&gt;&lt;strong&gt;nfb&lt;/strong&gt;: 定义不可接受数据的时间&lt;br&gt;&lt;strong&gt;iat&lt;/strong&gt;: JWT的声明时间&lt;/p&gt;
+&lt;p&gt;转换成Base64后得到第二部分&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;eyJpc3MiOiAiY2hlbmdwZW5nLm1lIiwiZXhwIjogMTQ0NDQ0NDQ0LCJ1c2VyIjogIkNQIiwiZW1haWwiOiJjaGVuZ2FuZHBlbmdAZ21haWwuY29tIn0=&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h3 id=&quot;Singnature&quot;&gt;&lt;a href=&quot;#Singnature&quot; class=&quot;headerlink&quot; title=&quot;Singnature&quot;&gt;&lt;/a&gt;Singnature&lt;/h3&gt;&lt;p&gt;第三部分的签名由上面我们得到的header和payload的base64的字符串，通过&lt;strong&gt;.&lt;/strong&gt;连接起来，然后使用HS256算法进行加密得到。&lt;br&gt;&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; encodedString = base64UrlEncode(header) + &lt;span class=&quot;string&quot;&gt;&quot;.&quot;&lt;/span&gt; + base64UrlEncode(payload);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;HMACSHA256(encodedString, &lt;span class=&quot;string&quot;&gt;&#39;secret&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;加密时必须定义一个加密字符串（本例中为’secret’），由服务端自行定义，计算后得到的结果是&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;183e996cf3ba65be2d31e6ea3d53d70942ded7a9b89bfdd7e47e38a554c3ff25&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;把这部分内容和前2个结果通过&lt;strong&gt;.&lt;/strong&gt;符号接连起来就是我们的JWT了&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiAiY2hlbmdwZW5nLm1lIiwiZXhwIjogMTQ0NDQ0NDQ0LCJ1c2VyIjogIkNQIiwiZW1haWwiOiJjaGVuZ2FuZHBlbmdAZ21haWwuY29tIn0=.183e996cf3ba65be2d31e6ea3d53d70942ded7a9b89bfdd7e47e38a554c3ff25&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&quot;JWT-vs-Cookie&quot;&gt;&lt;a href=&quot;#JWT-vs-Cookie&quot; class=&quot;headerlink&quot; title=&quot;JWT vs Cookie&quot;&gt;&lt;/a&gt;JWT vs Cookie&lt;/h2&gt;&lt;p&gt;相比传统的Cookie，使用JWT有些什么好处呢?&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;跨域：JWT允许向任何服务器或者域名使用ajax，因为JWT是包含在http header中传送数据的&lt;/li&gt;
+&lt;li&gt;减轻服务端负担：比起使用session来保存cookie，JWT自身包含了所有信息，通过解密即可验证&lt;/li&gt;
+&lt;li&gt;安全性：因为无需使用cookie，就不必担心劫持cookie的CSRF攻击了&lt;/li&gt;
+&lt;li&gt;移动端：对于无法使用cookie的一些移动端，JWT能够正常使用&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Authentication&quot;&gt;&lt;a href=&quot;#Authentication&quot; class=&quot;headerlink&quot; title=&quot;Authentication&quot;&gt;&lt;/a&gt;Authentication&lt;/h2&gt;&lt;p&gt;现在基本上有两种不同的方式来处理服务器端的认
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>用Mocha + chai做React + Redux的单元测试</title>

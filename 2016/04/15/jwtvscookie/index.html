@@ -59,22 +59,31 @@
 
 
 
-<meta name="description" content="ApplePay启动2016年2月18日，ApplePay正式在中国市场启动。
-关于ApplePay的消息文章，从18日开始蜂拥而至，手握iPhone的群众纷纷骚动起来，迫(pǎi)不及待的要参与到新一波的装B热潮。。。结果遭遇的是一大波的无法绑卡问题 [Apple Pay绑卡长达4小时遭吐槽 水土不服陷尴尬]">
+<meta name="description" content="Authentication现在基本上有两种不同的方式来处理服务器端的认证（Authentication）问题。
+
+Cookie-Based Authentication:最常用的是利用cookie来存储认证信息，并包含在发送请求中用于服务器端的核查
+Token-Based Authentication:本文主要介绍的Token为基础的认证方式。
+
+Json Web Token(JWT)JWT是一">
 <meta property="og:type" content="article">
-<meta property="og:title" content="谁在ApplePay中捞了一笔了">
-<meta property="og:url" content="http://chengpeng.me/2016/02/23/applepay/index.html">
+<meta property="og:title" content="浅谈使用Json Web Token和Cookie的利弊">
+<meta property="og:url" content="http://chengpeng.me/2016/04/15/jwtvscookie/index.html">
 <meta property="og:site_name" content="CP的生活日志">
-<meta property="og:description" content="ApplePay启动2016年2月18日，ApplePay正式在中国市场启动。
-关于ApplePay的消息文章，从18日开始蜂拥而至，手握iPhone的群众纷纷骚动起来，迫(pǎi)不及待的要参与到新一波的装B热潮。。。结果遭遇的是一大波的无法绑卡问题 [Apple Pay绑卡长达4小时遭吐槽 水土不服陷尴尬]">
-<meta property="og:image" content="http://chengpeng.me/2016/02/23/applepay/applepay.jpg">
-<meta property="og:image" content="http://chengpeng.me/2016/02/23/applepay/transfer.jpg">
-<meta property="og:updated_time" content="2016-02-23T11:13:24.000Z">
+<meta property="og:description" content="Authentication现在基本上有两种不同的方式来处理服务器端的认证（Authentication）问题。
+
+Cookie-Based Authentication:最常用的是利用cookie来存储认证信息，并包含在发送请求中用于服务器端的核查
+Token-Based Authentication:本文主要介绍的Token为基础的认证方式。
+
+Json Web Token(JWT)JWT是一">
+<meta property="og:updated_time" content="2016-04-15T08:34:58.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="谁在ApplePay中捞了一笔了">
-<meta name="twitter:description" content="ApplePay启动2016年2月18日，ApplePay正式在中国市场启动。
-关于ApplePay的消息文章，从18日开始蜂拥而至，手握iPhone的群众纷纷骚动起来，迫(pǎi)不及待的要参与到新一波的装B热潮。。。结果遭遇的是一大波的无法绑卡问题 [Apple Pay绑卡长达4小时遭吐槽 水土不服陷尴尬]">
-<meta name="twitter:image" content="http://chengpeng.me/2016/02/23/applepay/applepay.jpg">
+<meta name="twitter:title" content="浅谈使用Json Web Token和Cookie的利弊">
+<meta name="twitter:description" content="Authentication现在基本上有两种不同的方式来处理服务器端的认证（Authentication）问题。
+
+Cookie-Based Authentication:最常用的是利用cookie来存储认证信息，并包含在发送请求中用于服务器端的核查
+Token-Based Authentication:本文主要介绍的Token为基础的认证方式。
+
+Json Web Token(JWT)JWT是一">
 
 
 
@@ -92,7 +101,7 @@
   };
 </script>
 
-  <title> 谁在ApplePay中捞了一笔了 | CP的生活日志 </title>
+  <title> 浅谈使用Json Web Token和Cookie的利弊 | CP的生活日志 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -260,7 +269,7 @@
             
             
               
-                谁在ApplePay中捞了一笔了
+                浅谈使用Json Web Token和Cookie的利弊
               
             
           </h1>
@@ -272,8 +281,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-02-23T12:28:14+08:00" content="2016-02-23">
-              2016-02-23
+            <time itemprop="dateCreated" datetime="2016-04-15T15:32:48+08:00" content="2016-04-15">
+              2016-04-15
             </time>
           </span>
 
@@ -283,8 +292,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/02/23/applepay/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/23/applepay/" itemprop="commentsCount"></span>
+                <a href="/2016/04/15/jwtvscookie/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/15/jwtvscookie/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -305,30 +314,28 @@
       
 
       
-        <h2 id="ApplePay启动"><a href="#ApplePay启动" class="headerlink" title="ApplePay启动"></a>ApplePay启动</h2><p>2016年2月18日，ApplePay正式在中国市场启动。<br><img src="/2016/02/23/applepay/applepay.jpg" alt="ApplePay" title="ApplePay"></p>
-<p>关于ApplePay的消息文章，从18日开始蜂拥而至，手握iPhone的群众纷纷骚动起来，迫(pǎi)不及待的要参与到新一波的装B热潮。。。<br>结果遭遇的是一大波的无法绑卡问题 [<a href="http://finance.sina.com.cn/money/lczx/2016-02-19/details-ifxprupc9431806.shtml" target="_blank" rel="external">Apple Pay绑卡长达4小时遭吐槽 水土不服陷尴尬</a>]</p>
-<a id="more"></a>
-<h2 id="NFC非接支付"><a href="#NFC非接支付" class="headerlink" title="NFC非接支付"></a>NFC非接支付</h2><p>其实ApplePay这东西还真不算是新玩意儿，NFC非接支付银联之前就搞过，只不过因为安全性问题，需要将钱先划进电子钱包才能进行闪付，程序上过于繁琐。但是技术上和ApplePay是差不多的，一个拿着手机啪啪啪，一个拿着卡啪啪啪。只不过在iPhone的光环下，一下子让这种支付方式变得更加有型有趣有逼格。</p>
-<blockquote>
-<p>用户角度的ApplePay文章太多就不说了，我们聊聊银行角度的ApplePay</p>
-</blockquote>
-<h2 id="为什么绑不了卡？"><a href="#为什么绑不了卡？" class="headerlink" title="为什么绑不了卡？"></a>为什么绑不了卡？</h2><p>作为一个曾经的短暂银行业从业人员，深知银行项目的排期是比较严格的，往往半年前甚至更久前就开始排期，除非遇到一些<strong>行长级别的</strong>需求，有可能可以插个队。所以不清楚ApplePay的支持项目在各个银行间是多久前开始进行的，工程师加了多少班。在开发的过程中少不了测试，必然包括绑卡测试，这个时候就需要苹果，以及银联方的支持了。第三方支持这东西，人品几率很大，以前跟万事达做项目时候，第一个项目的对接姑娘不错，工作时间内邮件一般都能及时回复，配合测试也很专业，极大提高了效率。但是第二个项目的支持工程师就不行了，邮件不及时回，连测试内容都能搞错，整个项目的周期也是因此拖后了几周才得以完成。</p>
-<p>所以在Apple同时与这么多家银行合作开发ApplePay时，待遇可谓看脸看心情。所以在上线之后，碰到这么多的绑卡问题，再次为银行工程师默哀。</p>
-<h2 id="谁赚到钱了？"><a href="#谁赚到钱了？" class="headerlink" title="谁赚到钱了？"></a>谁赚到钱了？</h2><p>银联之所以愿意和苹果合作，是因为ApplePay的使用必须得经过银联。与支付宝，微信支付不同，苹果在整个交易过程中是不涉及资金持有的。这之前先普及一下从我们刷卡到支付完成的一个流程吧。<br><img src="/2016/02/23/applepay/transfer.jpg" alt="交易流程" title="交易流程"></p>
-<p>假设我们持有<strong>A银行的一张信用卡</strong>，去POS机刷卡时，我们可能遭遇3种POS机，</p>
-<ul>
-<li>A银行自己的POS机</li>
-<li>别的银行的POS机</li>
-<li>银联商务的POS机</li>
-</ul>
-<p>当我们在A银行的POS机消费时，交易报文会跳过银联，直接传到A银行的后台，处理完返回形成闭环。<br>而我们在B银行或者银联商务的POS机上消费时，则会先通过银联，再传至A银行后台，最后返回形成闭环。</p>
-<p>第一种情况行内称之为”本代本“，同样的场景也适用于ATM机，不与银联产生任何交集。<br>第二种情况称之为“他代本”，银联会分得一部分利润。</p>
-<p>在ApplePay加入的情况下，整个交易路由没有变化，只是最先的信用卡换成了iPhone，同时苹果加入分配利润。</p>
-<p>这时候在第一种情况下,即使用户使用了ApplePay，银联不知道，苹果更不知道。银行无偿完成了一次ApplePay，不用分任何利润给银联和苹果。很难说这对于银行来说是赚了还是没赚，至少是免除了一部分钱给苹果了。<br>这种情况在现实中会占多大比例呢？，假如我有一张工行的卡，我必须得找到工行的POS机来刷，才有可能发生。而且这些对用户来说是没有区别的。哪家银行POS机铺的点多，发行的卡多，才有可能省出点肉钱吧。</p>
-<p>这个情况是否会继续持续下去呢？套用我原老大的一句话：</p>
-<blockquote>
-<p>国内出人意料的事太多，以后谁也说不定。</p>
-</blockquote>
+        <h2 id="Authentication"><a href="#Authentication" class="headerlink" title="Authentication"></a>Authentication</h2><p>现在基本上有两种不同的方式来处理服务器端的认证（Authentication）问题。</p>
+<ol>
+<li>Cookie-Based Authentication:最常用的是利用cookie来存储认证信息，并包含在发送请求中用于服务器端的核查</li>
+<li>Token-Based Authentication:本文主要介绍的Token为基础的认证方式。</li>
+</ol>
+<h2 id="Json-Web-Token-JWT"><a href="#Json-Web-Token-JWT" class="headerlink" title="Json Web Token(JWT)"></a>Json Web Token(JWT)</h2><p>JWT是一个以JSON为基准的标准规范，通过JSON来传递消息，具体定义可以参见<a href="http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html" target="_blank" rel="external">这里</a><br>JWT自身会携带所有的信息，包括payload和signature。<br>JWT常常通过HTTP的header来传送信息，同时也可以通过URL来传送。</p>
+<p><strong>JWT的构成</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">header.payload.signature</span><br></pre></td></tr></table></figure></p>
+<h3 id="Header"><a href="#Header" class="headerlink" title="Header"></a>Header</h3><p>Header包含2部分。<br>typ定义类型为JWT，alg定义加密类型为HS256<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"typ"</span>:<span class="string">"JWT"</span>,</span><br><span class="line">    <span class="attr">"alg"</span>:<span class="string">"HS256"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>通过<a href="https://zh.wikipedia.org/wiki/Base64" target="_blank" rel="external">Base64</a>的转化得到第一部分<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9</span><br></pre></td></tr></table></figure></p>
+<h3 id="Payload"><a href="#Payload" class="headerlink" title="Payload"></a>Payload</h3><p>这部分由我们需要发送的数据内容构成<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"iss"</span>: <span class="string">"chengpeng.me"</span>,</span><br><span class="line">    <span class="attr">"exp"</span>: <span class="number">144444444</span>,</span><br><span class="line">    <span class="attr">"user"</span>: <span class="string">"CP"</span>,</span><br><span class="line">    <span class="attr">"email"</span>: <span class="string">"chengandpeng@gmail.com"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中<br><strong>iss</strong>: token的发行者<br><strong>exp</strong>: 过期时间，必须在现在时间之后<br>其他一些声明<br><strong>sub</strong>: token的主题<br><strong>aud</strong>: token的接受者<br><strong>nfb</strong>: 定义不可接受数据的时间<br><strong>iat</strong>: JWT的声明时间</p>
+<p>转换成Base64后得到第二部分<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJpc3MiOiAiY2hlbmdwZW5nLm1lIiwiZXhwIjogMTQ0NDQ0NDQ0LCJ1c2VyIjogIkNQIiwiZW1haWwiOiJjaGVuZ2FuZHBlbmdAZ21haWwuY29tIn0=</span><br></pre></td></tr></table></figure></p>
+<h3 id="Singnature"><a href="#Singnature" class="headerlink" title="Singnature"></a>Singnature</h3><p>第三部分的签名由上面我们得到的header和payload的base64的字符串，通过<strong>.</strong>连接起来，然后使用HS256算法进行加密得到。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> encodedString = base64UrlEncode(header) + <span class="string">"."</span> + base64UrlEncode(payload);</span><br><span class="line">HMACSHA256(encodedString, <span class="string">'secret'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>加密时必须定义一个加密字符串（本例中为’secret’），由服务端自行定义，计算后得到的结果是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">183e996cf3ba65be2d31e6ea3d53d70942ded7a9b89bfdd7e47e38a554c3ff25</span><br></pre></td></tr></table></figure></p>
+<p>把这部分内容和前2个结果通过<strong>.</strong>符号接连起来就是我们的JWT了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiAiY2hlbmdwZW5nLm1lIiwiZXhwIjogMTQ0NDQ0NDQ0LCJ1c2VyIjogIkNQIiwiZW1haWwiOiJjaGVuZ2FuZHBlbmdAZ21haWwuY29tIn0=.183e996cf3ba65be2d31e6ea3d53d70942ded7a9b89bfdd7e47e38a554c3ff25</span><br></pre></td></tr></table></figure></p>
+<h2 id="JWT-vs-Cookie"><a href="#JWT-vs-Cookie" class="headerlink" title="JWT vs Cookie"></a>JWT vs Cookie</h2><p>相比传统的Cookie，使用JWT有些什么好处呢?</p>
+<ol>
+<li>跨域：JWT允许向任何服务器或者域名使用ajax，因为JWT是包含在http header中传送数据的</li>
+<li>减轻服务端负担：比起使用session来保存cookie，JWT自身包含了所有信息，通过解密即可验证</li>
+<li>安全性：因为无需使用cookie，就不必担心劫持cookie的CSRF攻击了</li>
+<li>移动端：对于无法使用cookie的一些移动端，JWT能够正常使用</li>
+</ol>
 
       
     </div>
@@ -340,17 +347,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/02/22/first-post/" rel="next" title="first post">
-                <i class="fa fa-chevron-left"></i> first post
+              <a href="/2016/04/12/reactUnitTest/" rel="next" title="用Mocha + chai做React + Redux的单元测试">
+                <i class="fa fa-chevron-left"></i> 用Mocha + chai做React + Redux的单元测试
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/03/08/mpv/" rel="prev" title="新一代视频播放器：MPV">
-                新一代视频播放器：MPV <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -365,10 +368,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/02/23/applepay/"
-     data-title="谁在ApplePay中捞了一笔了"
+        <div class="ds-share flat" data-thread-key="2016/04/15/jwtvscookie/"
+     data-title="浅谈使用Json Web Token和Cookie的利弊"
      data-content=""
-     data-url="http://chengpeng.me/2016/02/23/applepay/">
+     data-url="http://chengpeng.me/2016/04/15/jwtvscookie/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -398,8 +401,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/02/23/applepay/"
-           data-title="谁在ApplePay中捞了一笔了" data-url="http://chengpeng.me/2016/02/23/applepay/">
+      <div class="ds-thread" data-thread-key="2016/04/15/jwtvscookie/"
+           data-title="浅谈使用Json Web Token和Cookie的利弊" data-url="http://chengpeng.me/2016/04/15/jwtvscookie/">
       </div>
     
   </div>
@@ -543,7 +546,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ApplePay启动"><span class="nav-number">1.</span> <span class="nav-text">ApplePay启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NFC非接支付"><span class="nav-number">2.</span> <span class="nav-text">NFC非接支付</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么绑不了卡？"><span class="nav-number">3.</span> <span class="nav-text">为什么绑不了卡？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#谁赚到钱了？"><span class="nav-number">4.</span> <span class="nav-text">谁赚到钱了？</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Authentication"><span class="nav-number">1.</span> <span class="nav-text">Authentication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Json-Web-Token-JWT"><span class="nav-number">2.</span> <span class="nav-text">Json Web Token(JWT)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Header"><span class="nav-number">2.1.</span> <span class="nav-text">Header</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Payload"><span class="nav-number">2.2.</span> <span class="nav-text">Payload</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Singnature"><span class="nav-number">2.3.</span> <span class="nav-text">Singnature</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JWT-vs-Cookie"><span class="nav-number">3.</span> <span class="nav-text">JWT vs Cookie</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

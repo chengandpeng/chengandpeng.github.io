@@ -262,6 +262,118 @@
             
               
                 
+                <a class="post-title-link" href="/2016/04/15/jwtvscookie/" itemprop="url">
+                  浅谈使用Json Web Token和Cookie的利弊
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-15T15:32:48+08:00" content="2016-04-15">
+              2016-04-15
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/15/jwtvscookie/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/15/jwtvscookie/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Authentication"><a href="#Authentication" class="headerlink" title="Authentication"></a>Authentication</h2><p>现在基本上有两种不同的方式来处理服务器端的认证（Authentication）问题。</p>
+<ol>
+<li>Cookie-Based Authentication:最常用的是利用cookie来存储认证信息，并包含在发送请求中用于服务器端的核查</li>
+<li>Token-Based Authentication:本文主要介绍的Token为基础的认证方式。</li>
+</ol>
+<h2 id="Json-Web-Token-JWT"><a href="#Json-Web-Token-JWT" class="headerlink" title="Json Web Token(JWT)"></a>Json Web Token(JWT)</h2><p>JWT是一个以JSON为基准的标准规范，通过JSON来传递消息，具体定义可以参见<a href="http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html" target="_blank" rel="external">这里</a><br>JWT自身会携带所有的信息，包括payload和signature。<br>JWT常常通过HTTP的header来传送信息，同时也可以通过URL来传送。</p>
+<p><strong>JWT的构成</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">header.payload.signature</span><br></pre></td></tr></table></figure></p>
+<h3 id="Header"><a href="#Header" class="headerlink" title="Header"></a>Header</h3><p>Header包含2部分。<br>typ定义类型为JWT，alg定义加密类型为HS256<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"typ"</span>:<span class="string">"JWT"</span>,</span><br><span class="line">    <span class="attr">"alg"</span>:<span class="string">"HS256"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>通过<a href="https://zh.wikipedia.org/wiki/Base64" target="_blank" rel="external">Base64</a>的转化得到第一部分<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9</span><br></pre></td></tr></table></figure></p>
+<h3 id="Payload"><a href="#Payload" class="headerlink" title="Payload"></a>Payload</h3><p>这部分由我们需要发送的数据内容构成<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"iss"</span>: <span class="string">"chengpeng.me"</span>,</span><br><span class="line">    <span class="attr">"exp"</span>: <span class="number">144444444</span>,</span><br><span class="line">    <span class="attr">"user"</span>: <span class="string">"CP"</span>,</span><br><span class="line">    <span class="attr">"email"</span>: <span class="string">"chengandpeng@gmail.com"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中<br><strong>iss</strong>: token的发行者<br><strong>exp</strong>: 过期时间，必须在现在时间之后<br>其他一些声明<br><strong>sub</strong>: token的主题<br><strong>aud</strong>: token的接受者<br><strong>nfb</strong>: 定义不可接受数据的时间<br><strong>iat</strong>: JWT的声明时间</p>
+<p>转换成Base64后得到第二部分<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJpc3MiOiAiY2hlbmdwZW5nLm1lIiwiZXhwIjogMTQ0NDQ0NDQ0LCJ1c2VyIjogIkNQIiwiZW1haWwiOiJjaGVuZ2FuZHBlbmdAZ21haWwuY29tIn0=</span><br></pre></td></tr></table></figure></p>
+<h3 id="Singnature"><a href="#Singnature" class="headerlink" title="Singnature"></a>Singnature</h3><p>第三部分的签名由上面我们得到的header和payload的base64的字符串，通过<strong>.</strong>连接起来，然后使用HS256算法进行加密得到。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> encodedString = base64UrlEncode(header) + <span class="string">"."</span> + base64UrlEncode(payload);</span><br><span class="line">HMACSHA256(encodedString, <span class="string">'secret'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>加密时必须定义一个加密字符串（本例中为’secret’），由服务端自行定义，计算后得到的结果是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">183e996cf3ba65be2d31e6ea3d53d70942ded7a9b89bfdd7e47e38a554c3ff25</span><br></pre></td></tr></table></figure></p>
+<p>把这部分内容和前2个结果通过<strong>.</strong>符号接连起来就是我们的JWT了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiAiY2hlbmdwZW5nLm1lIiwiZXhwIjogMTQ0NDQ0NDQ0LCJ1c2VyIjogIkNQIiwiZW1haWwiOiJjaGVuZ2FuZHBlbmdAZ21haWwuY29tIn0=.183e996cf3ba65be2d31e6ea3d53d70942ded7a9b89bfdd7e47e38a554c3ff25</span><br></pre></td></tr></table></figure></p>
+<h2 id="JWT-vs-Cookie"><a href="#JWT-vs-Cookie" class="headerlink" title="JWT vs Cookie"></a>JWT vs Cookie</h2><p>相比传统的Cookie，使用JWT有些什么好处呢?</p>
+<ol>
+<li>跨域：JWT允许向任何服务器或者域名使用ajax，因为JWT是包含在http header中传送数据的</li>
+<li>减轻服务端负担：比起使用session来保存cookie，JWT自身包含了所有信息，通过解密即可验证</li>
+<li>安全性：因为无需使用cookie，就不必担心劫持cookie的CSRF攻击了</li>
+<li>移动端：对于无法使用cookie的一些移动端，JWT能够正常使用</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/04/12/reactUnitTest/" itemprop="url">
                   用Mocha + chai做React + Redux的单元测试
                 </a>
@@ -712,7 +824,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-count">5</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
