@@ -66,7 +66,7 @@
     <link href="http://chengpeng.me/2016/04/12/reactUnitTest/"/>
     <id>http://chengpeng.me/2016/04/12/reactUnitTest/</id>
     <published>2016-04-12T10:47:32.000Z</published>
-    <updated>2016-04-13T02:19:03.000Z</updated>
+    <updated>2016-04-16T10:58:06.000Z</updated>
     
     <content type="html">&lt;p&gt;当面对现在流行的React+Redux创建的Web应用时，该如何用Mocha+Chai进行测试？&lt;/p&gt;
 &lt;h2 id=&quot;搭建测试基础框架&quot;&gt;&lt;a href=&quot;#搭建测试基础框架&quot; class=&quot;headerlink&quot; title=&quot;搭建测试基础框架&quot;&gt;&lt;/a&gt;搭建测试基础框架&lt;/h2&gt;&lt;p&gt;为了搭建搭建框架，我们需要做以下几个事：&lt;/p&gt;
@@ -137,7 +137,7 @@
     <link href="http://chengpeng.me/2016/03/08/mpv/"/>
     <id>http://chengpeng.me/2016/03/08/mpv/</id>
     <published>2016-03-08T08:55:04.000Z</published>
-    <updated>2016-03-08T14:32:21.000Z</updated>
+    <updated>2016-04-17T11:55:07.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;为啥要用MPV&quot;&gt;&lt;a href=&quot;#为啥要用MPV&quot; class=&quot;headerlink&quot; title=&quot;为啥要用MPV&quot;&gt;&lt;/a&gt;为啥要用MPV&lt;/h2&gt;&lt;p&gt;视频播放器一向是各个平台上比较重要的一个工具软件。特别对于中国，在这个&lt;strong&gt;下载&lt;/strong&gt;比较&lt;strong&gt;自由&lt;/strong&gt;的国家，我们对于播放器的要求一向比较高，既要支持古老的RMVB格式，又要解的了H.265，还要能友好处理UTF-8，GBK，GB2312编码的字幕，着实比较麻烦。&lt;/p&gt;
 &lt;h3 id=&quot;Windows&quot;&gt;&lt;a href=&quot;#Windows&quot; class=&quot;headerlink&quot; title=&quot;Windows&quot;&gt;&lt;/a&gt;Windows&lt;/h3&gt;&lt;p&gt;从&lt;a href=&quot;http://www.kmplayer.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;KMPlayer&lt;/a&gt;，到&lt;a href=&quot;https://potplayer.daum.net/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;PotPlayer&lt;/a&gt;。分离渲染自带，也方便添加修改，算是Windows下比较好的解决方式，现在发展到什么样子我也不太清楚了。&lt;/p&gt;
@@ -151,7 +151,7 @@
 &lt;img src=&quot;/2016/03/08/mpv/mpv.png&quot; alt=&quot;MPV&quot; title=&quot;MPV&quot;&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h2 id=&quot;MPV&quot;&gt;&lt;a href=&quot;#MPV&quot; class=&quot;headerlink&quot; title=&quot;MPV&quot;&gt;&lt;/a&gt;MPV&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;http://mpv.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;MPV&lt;/a&gt;是一款目前社区最活跃的，Mplayer分支的播放器了&lt;/p&gt;
-&lt;p&gt;TODO：明天接着写&lt;br&gt;安装：&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;brew install mpv --with-bundle&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;brew linkapps mpv&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;安装：&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;brew install mpv --with-bundle&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;brew linkapps mpv&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 </content>
     
     <summary type="html">
