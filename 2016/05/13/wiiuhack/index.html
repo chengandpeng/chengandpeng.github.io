@@ -59,31 +59,19 @@
 
 
 
-<meta name="description" content="Authentication现在基本上有两种不同的方式来处理服务器端的认证（Authentication）问题。
-
-Cookie-Based Authentication:最常用的是利用cookie来存储认证信息，并包含在发送请求中用于服务器端的核查
-Token-Based Authentication:本文主要介绍的Token为基础的认证方式。
-
-Json Web Token(JWT)JWT是一">
+<meta name="description" content="题外话自从node升了v6, hexo就沦陷了，到现在还没能支持。实在等不了了，只能node降级了。当然也可以用nvm安装多个node版本，不过因为以前用RVM做ruby版本控制有点阴影，所以就罢了，反正一个版本也够用了。
+WiiU破解本破解教程参考自FlimFlam69’s 5.5.1 Kernel Exploit Guide (And other various things)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="浅谈使用Json Web Token和Cookie的利弊">
-<meta property="og:url" content="http://chengpeng.me/2016/04/15/jwtvscookie/index.html">
+<meta property="og:title" content="WiiU 5.5/5.5.1 破解">
+<meta property="og:url" content="http://chengpeng.me/2016/05/13/wiiuhack/index.html">
 <meta property="og:site_name" content="CP的生活日志">
-<meta property="og:description" content="Authentication现在基本上有两种不同的方式来处理服务器端的认证（Authentication）问题。
-
-Cookie-Based Authentication:最常用的是利用cookie来存储认证信息，并包含在发送请求中用于服务器端的核查
-Token-Based Authentication:本文主要介绍的Token为基础的认证方式。
-
-Json Web Token(JWT)JWT是一">
-<meta property="og:updated_time" content="2016-04-15T08:37:00.000Z">
+<meta property="og:description" content="题外话自从node升了v6, hexo就沦陷了，到现在还没能支持。实在等不了了，只能node降级了。当然也可以用nvm安装多个node版本，不过因为以前用RVM做ruby版本控制有点阴影，所以就罢了，反正一个版本也够用了。
+WiiU破解本破解教程参考自FlimFlam69’s 5.5.1 Kernel Exploit Guide (And other various things)">
+<meta property="og:updated_time" content="2016-05-13T06:16:47.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="浅谈使用Json Web Token和Cookie的利弊">
-<meta name="twitter:description" content="Authentication现在基本上有两种不同的方式来处理服务器端的认证（Authentication）问题。
-
-Cookie-Based Authentication:最常用的是利用cookie来存储认证信息，并包含在发送请求中用于服务器端的核查
-Token-Based Authentication:本文主要介绍的Token为基础的认证方式。
-
-Json Web Token(JWT)JWT是一">
+<meta name="twitter:title" content="WiiU 5.5/5.5.1 破解">
+<meta name="twitter:description" content="题外话自从node升了v6, hexo就沦陷了，到现在还没能支持。实在等不了了，只能node降级了。当然也可以用nvm安装多个node版本，不过因为以前用RVM做ruby版本控制有点阴影，所以就罢了，反正一个版本也够用了。
+WiiU破解本破解教程参考自FlimFlam69’s 5.5.1 Kernel Exploit Guide (And other various things)">
 
 
 
@@ -101,7 +89,7 @@ Json Web Token(JWT)JWT是一">
   };
 </script>
 
-  <title> 浅谈使用Json Web Token和Cookie的利弊 | CP的生活日志 </title>
+  <title> WiiU 5.5/5.5.1 破解 | CP的生活日志 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -269,7 +257,7 @@ Json Web Token(JWT)JWT是一">
             
             
               
-                浅谈使用Json Web Token和Cookie的利弊
+                WiiU 5.5/5.5.1 破解
               
             
           </h1>
@@ -281,8 +269,8 @@ Json Web Token(JWT)JWT是一">
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-15T15:32:48+08:00" content="2016-04-15">
-              2016-04-15
+            <time itemprop="dateCreated" datetime="2016-05-13T11:19:03+08:00" content="2016-05-13">
+              2016-05-13
             </time>
           </span>
 
@@ -292,8 +280,8 @@ Json Web Token(JWT)JWT是一">
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/04/15/jwtvscookie/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/15/jwtvscookie/" itemprop="commentsCount"></span>
+                <a href="/2016/05/13/wiiuhack/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/13/wiiuhack/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -314,29 +302,57 @@ Json Web Token(JWT)JWT是一">
       
 
       
-        <h2 id="Authentication"><a href="#Authentication" class="headerlink" title="Authentication"></a>Authentication</h2><p>现在基本上有两种不同的方式来处理服务器端的认证（Authentication）问题。</p>
-<ol>
-<li>Cookie-Based Authentication:最常用的是利用cookie来存储认证信息，并包含在发送请求中用于服务器端的核查</li>
-<li>Token-Based Authentication:本文主要介绍的Token为基础的认证方式。</li>
-</ol>
-<h2 id="Json-Web-Token-JWT"><a href="#Json-Web-Token-JWT" class="headerlink" title="Json Web Token(JWT)"></a>Json Web Token(JWT)</h2><p>JWT是一个以JSON为基准的标准规范，通过JSON来传递消息，具体定义可以参见<a href="http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html" target="_blank" rel="external">这里</a><br>JWT自身会携带所有的信息，包括payload和signature。<br>JWT常常通过HTTP的header来传送信息，同时也可以通过URL来传送。</p>
+        <h2 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h2><p>自从node升了v6, hexo就沦陷了，到现在还没能支持。实在等不了了，只能node降级了。<br>当然也可以用<a href="https://github.com/creationix/nvm" target="_blank" rel="external">nvm</a>安装多个node版本，不过因为以前用RVM做ruby版本控制有点阴影，所以就罢了，反正一个版本也够用了。</p>
+<h2 id="WiiU破解"><a href="#WiiU破解" class="headerlink" title="WiiU破解"></a>WiiU破解</h2><p>本破解教程参考自<a href="https://www.reddit.com/r/WiiUHacks/comments/4i4rv7/flimflam69s_551_kernel_exploit_guide_and_other/" target="_blank" rel="external">FlimFlam69’s 5.5.1 Kernel Exploit Guide (And other various things)</a></p>
 <a id="more"></a>
-<p><strong>JWT的构成</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">header.payload.signature</span><br></pre></td></tr></table></figure></p>
-<h3 id="Header"><a href="#Header" class="headerlink" title="Header"></a>Header</h3><p>Header包含2部分。<br>typ定义类型为JWT，alg定义加密类型为HS256<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"typ"</span>:<span class="string">"JWT"</span>,</span><br><span class="line">    <span class="attr">"alg"</span>:<span class="string">"HS256"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>通过<a href="https://zh.wikipedia.org/wiki/Base64" target="_blank" rel="external">Base64</a>的转化得到第一部分<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9</span><br></pre></td></tr></table></figure></p>
-<h3 id="Payload"><a href="#Payload" class="headerlink" title="Payload"></a>Payload</h3><p>这部分由我们需要发送的数据内容构成<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"iss"</span>: <span class="string">"chengpeng.me"</span>,</span><br><span class="line">    <span class="attr">"exp"</span>: <span class="number">144444444</span>,</span><br><span class="line">    <span class="attr">"user"</span>: <span class="string">"CP"</span>,</span><br><span class="line">    <span class="attr">"email"</span>: <span class="string">"chengandpeng@gmail.com"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>其中<br><strong>iss</strong>: token的发行者<br><strong>exp</strong>: 过期时间，必须在现在时间之后<br>其他一些声明<br><strong>sub</strong>: token的主题<br><strong>aud</strong>: token的接受者<br><strong>nfb</strong>: 定义不可接受数据的时间<br><strong>iat</strong>: JWT的声明时间</p>
-<p>转换成Base64后得到第二部分<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJpc3MiOiAiY2hlbmdwZW5nLm1lIiwiZXhwIjogMTQ0NDQ0NDQ0LCJ1c2VyIjogIkNQIiwiZW1haWwiOiJjaGVuZ2FuZHBlbmdAZ21haWwuY29tIn0=</span><br></pre></td></tr></table></figure></p>
-<h3 id="Singnature"><a href="#Singnature" class="headerlink" title="Singnature"></a>Singnature</h3><p>第三部分的签名由上面我们得到的header和payload的base64的字符串，通过<strong>.</strong>连接起来，然后使用HS256算法进行加密得到。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> encodedString = base64UrlEncode(header) + <span class="string">"."</span> + base64UrlEncode(payload);</span><br><span class="line">HMACSHA256(encodedString, <span class="string">'secret'</span>);</span><br></pre></td></tr></table></figure></p>
-<p>加密时必须定义一个加密字符串（本例中为’secret’），由服务端自行定义，计算后得到的结果是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">183e996cf3ba65be2d31e6ea3d53d70942ded7a9b89bfdd7e47e38a554c3ff25</span><br></pre></td></tr></table></figure></p>
-<p>把这部分内容和前2个结果通过<strong>.</strong>符号接连起来就是我们的JWT了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiAiY2hlbmdwZW5nLm1lIiwiZXhwIjogMTQ0NDQ0NDQ0LCJ1c2VyIjogIkNQIiwiZW1haWwiOiJjaGVuZ2FuZHBlbmdAZ21haWwuY29tIn0=.183e996cf3ba65be2d31e6ea3d53d70942ded7a9b89bfdd7e47e38a554c3ff25</span><br></pre></td></tr></table></figure></p>
-<h2 id="JWT-vs-Cookie"><a href="#JWT-vs-Cookie" class="headerlink" title="JWT vs Cookie"></a>JWT vs Cookie</h2><p>相比传统的Cookie，使用JWT有些什么好处呢?</p>
+<h3 id="确认WiiU版本"><a href="#确认WiiU版本" class="headerlink" title="确认WiiU版本"></a>确认WiiU版本</h3><p>之前可以破解的最新版本是5.3.2， 现在可以将WiiU先升级到5.5.1版本。<br>如果看文章时最新版本已经超过5.5.1，请先确认是否支持破解再升级。</p>
+<h2 id="屏蔽自动升级"><a href="#屏蔽自动升级" class="headerlink" title="屏蔽自动升级"></a>屏蔽自动升级</h2><p>为了防止任天堂升级内核补漏洞，需要将WiiU的自动升级屏蔽，有以下两个方式</p>
+<h3 id="1-修改DNS"><a href="#1-修改DNS" class="headerlink" title="1.修改DNS"></a>1.修改DNS</h3><p>在WiiU的Internet设置中修改DNS相关设置</p>
 <ol>
-<li>跨域：JWT允许向任何服务器或者域名使用ajax，因为JWT是包含在http header中传送数据的</li>
-<li>减轻服务端负担：比起使用session来保存cookie，JWT自身包含了所有信息，通过解密即可验证</li>
-<li>安全性：因为无需使用cookie，就不必担心劫持cookie的CSRF攻击了</li>
-<li>移动端：对于无法使用cookie的一些移动端，JWT能够正常使用</li>
+<li>Turn Auto-Obtain DNS <strong>OFF</strong></li>
+<li>Set Primary DNS to <strong>107.211.140.065</strong></li>
+<li>Set Secondary DNS to <strong>107.211.140.065</strong></li>
 </ol>
+<p>修改完DNS以后，WiiU无法解析服务器地址，就无法自动升级了，但是也登陆不了eShop了，原贴中有相关解决方案。同时也看不了Youtube，这对墙内的同学来说也没什么区别。</p>
+<h3 id="2-屏蔽URL"><a href="#2-屏蔽URL" class="headerlink" title="2.屏蔽URL"></a>2.屏蔽URL</h3><p>类似修改hosts文件，在路由器中将如下地址给屏蔽掉</p>
+<ul>
+<li>nus.cdn.c.shop.nintendowifi.net</li>
+<li>nus.cdn.shop.wii.com</li>
+<li>nus.cdn.wup.shop.nintendo.net</li>
+<li>nus.wup.shop.nintendo.net</li>
+<li>nus.c.shop.nintendowifi.net</li>
+<li>c.shop.nintendowifi.net</li>
+<li>cbvc.cdn.nintendo.net</li>
+<li>cbvc.nintendo.net</li>
+</ul>
+<p>因为是在路由器中屏蔽的，如果同时有3DS或者其他任天堂机器连在同一个wifi中，也一样登陆不了相关商店。</p>
+<h3 id="关闭自动升级"><a href="#关闭自动升级" class="headerlink" title="关闭自动升级"></a>关闭自动升级</h3><p>注意在View Mac Address下面还有一个<strong>Automatic Software Downloads</strong>的选项注意设置为Disable。</p>
+<h2 id="配置SD卡"><a href="#配置SD卡" class="headerlink" title="配置SD卡"></a>配置SD卡</h2><p>现在破解只支持SD卡，还不支持外置硬盘，所以需要购置一块SD卡。<br>据说支持128G SDXC，我觉得没必要，用的是64G SDXC TF卡（插卡套），确认可支持。</p>
+<ol>
+<li>格式化SD卡为FAT32。（Mac下做格式化会有问题，我是通过vmware虚拟windows做的）</li>
+<li>下载最新 <a href="https://github.com/dimok789/homebrew_launcher/releases" target="_blank" rel="external">Homebrew Launcher</a></li>
+<li>下载最新 <a href="https://github.com/dimok789/loadiine_gx2/releases" target="_blank" rel="external">Loadiine GX2</a></li>
+<li>解压上面下载的2个文件，将文件对应以下路径拷贝到SD卡中</li>
+</ol>
+<ul>
+<li>SD:/wiiu/apps/homebrew_launcher/homebrew_launcher.elf</li>
+<li>SD:/wiiu/apps/homebrew_launcher/icon.png</li>
+<li>SD:/wiiu/apps/homebrew_launcher/meta.xml</li>
+<li>SD:/wiiu/apps/loadiine_gx2/loadiine_gx2.elf</li>
+</ul>
+<p>下载的游戏放在如下路径<br><strong>SD:/wiiu/games/Example Game [GAMEID]</strong><br>如果下载的游戏没有GAMEID，可以去<a href="http://www.gametdb.com/WiiU" target="_blank" rel="external">GameTDB</a>查询。<br>游戏资源自己网上搜吧。</p>
+<h2 id="启动Kernel-Exploit"><a href="#启动Kernel-Exploit" class="headerlink" title="启动Kernel Exploit"></a>启动Kernel Exploit</h2><ol>
+<li>将SD卡插入WiiU卡槽</li>
+<li>打开WiiU,打开内置浏览器</li>
+<li>删除Cookies(Delete Cookies)</li>
+<li>打开地址<a href="http://loadiine.ovh/" target="_blank" rel="external">http://loadiine.ovh/</a> （建议加入收藏夹）</li>
+<li>国内打开可能有点慢，页面加载完毕后点击下拉菜单右边的绿色按钮。</li>
+<li>如果之前的配置都没有问题，等待片刻（也可能比较久），就会进入Homebrew.(如果白屏不动了请重启WiiU再次操作)</li>
+</ol>
+<h2 id="配置启动服务器"><a href="#配置启动服务器" class="headerlink" title="配置启动服务器"></a>配置启动服务器</h2><p>以后每次我们想玩的时候，必须打开<a href="http://loadiine.ovh/" target="_blank" rel="external">http://loadiine.ovh/</a>，但是因为网络条件，可能耗费的时间比较多，这时候我们可以自己搭设服务器来启动Homebrew.</p>
+<p>网上有用XAMPP在Windows下架服务器的<a href="http://gbatemp.net/threads/5-5-1-5-4-0-5-3-2-self-hosting-package-everything-in-one-zip-file.424679/" target="_blank" rel="external">教程</a>，有兴趣的可以去尝试。</p>
+<p>Mac的话也差不多，有空研究一下更新文章。</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>5.5/5.5.1版本的破解其实去年底就有消息了，拖到3月份发布者消息后也就不了了之了。<br>之后上个月任天堂发布NX的发售日程，WiiU的停产消息。<br>现在WiiU失守，另一(yin)方(mou)面(lun)也可以看做帮了任天堂，将WiiU变废为宝。相信接下来一段时间WiiU的销售会有一阵小高潮。<br>不过Loadiine目前还不支持online play，所以也无法体验到好多以在线为主的游戏。<br>最后还是希望大家支持正版，哈哈。</p>
 
       
     </div>
@@ -348,17 +364,13 @@ Json Web Token(JWT)JWT是一">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/04/12/reactUnitTest/" rel="next" title="用Mocha + chai做React + Redux的单元测试">
-                <i class="fa fa-chevron-left"></i> 用Mocha + chai做React + Redux的单元测试
+              <a href="/2016/04/15/jwtvscookie/" rel="next" title="浅谈使用Json Web Token和Cookie的利弊">
+                <i class="fa fa-chevron-left"></i> 浅谈使用Json Web Token和Cookie的利弊
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/05/13/wiiuhack/" rel="prev" title="WiiU 5.5/5.5.1 破解">
-                WiiU 5.5/5.5.1 破解 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -373,10 +385,10 @@ Json Web Token(JWT)JWT是一">
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/04/15/jwtvscookie/"
-     data-title="浅谈使用Json Web Token和Cookie的利弊"
+        <div class="ds-share flat" data-thread-key="2016/05/13/wiiuhack/"
+     data-title="WiiU 5.5/5.5.1 破解"
      data-content=""
-     data-url="http://chengpeng.me/2016/04/15/jwtvscookie/">
+     data-url="http://chengpeng.me/2016/05/13/wiiuhack/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -406,8 +418,8 @@ Json Web Token(JWT)JWT是一">
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/04/15/jwtvscookie/"
-           data-title="浅谈使用Json Web Token和Cookie的利弊" data-url="http://chengpeng.me/2016/04/15/jwtvscookie/">
+      <div class="ds-thread" data-thread-key="2016/05/13/wiiuhack/"
+           data-title="WiiU 5.5/5.5.1 破解" data-url="http://chengpeng.me/2016/05/13/wiiuhack/">
       </div>
     
   </div>
@@ -551,7 +563,7 @@ Json Web Token(JWT)JWT是一">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Authentication"><span class="nav-number">1.</span> <span class="nav-text">Authentication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Json-Web-Token-JWT"><span class="nav-number">2.</span> <span class="nav-text">Json Web Token(JWT)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Header"><span class="nav-number">2.1.</span> <span class="nav-text">Header</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Payload"><span class="nav-number">2.2.</span> <span class="nav-text">Payload</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Singnature"><span class="nav-number">2.3.</span> <span class="nav-text">Singnature</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JWT-vs-Cookie"><span class="nav-number">3.</span> <span class="nav-text">JWT vs Cookie</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#题外话"><span class="nav-number">1.</span> <span class="nav-text">题外话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WiiU破解"><span class="nav-number">2.</span> <span class="nav-text">WiiU破解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#确认WiiU版本"><span class="nav-number">2.1.</span> <span class="nav-text">确认WiiU版本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#屏蔽自动升级"><span class="nav-number">3.</span> <span class="nav-text">屏蔽自动升级</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-修改DNS"><span class="nav-number">3.1.</span> <span class="nav-text">1.修改DNS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-屏蔽URL"><span class="nav-number">3.2.</span> <span class="nav-text">2.屏蔽URL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关闭自动升级"><span class="nav-number">3.3.</span> <span class="nav-text">关闭自动升级</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置SD卡"><span class="nav-number">4.</span> <span class="nav-text">配置SD卡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动Kernel-Exploit"><span class="nav-number">5.</span> <span class="nav-text">启动Kernel Exploit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置启动服务器"><span class="nav-number">6.</span> <span class="nav-text">配置启动服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-number">7.</span> <span class="nav-text">最后</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

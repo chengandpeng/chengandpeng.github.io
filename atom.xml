@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://chengpeng.me/"/>
-  <updated>2016-04-15T08:37:00.000Z</updated>
+  <updated>2016-05-13T06:16:47.000Z</updated>
   <id>http://chengpeng.me/</id>
   
   <author>
@@ -14,6 +14,76 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>WiiU 5.5/5.5.1 破解</title>
+    <link href="http://chengpeng.me/2016/05/13/wiiuhack/"/>
+    <id>http://chengpeng.me/2016/05/13/wiiuhack/</id>
+    <published>2016-05-13T03:19:03.000Z</published>
+    <updated>2016-05-13T06:16:47.000Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;题外话&quot;&gt;&lt;a href=&quot;#题外话&quot; class=&quot;headerlink&quot; title=&quot;题外话&quot;&gt;&lt;/a&gt;题外话&lt;/h2&gt;&lt;p&gt;自从node升了v6, hexo就沦陷了，到现在还没能支持。实在等不了了，只能node降级了。&lt;br&gt;当然也可以用&lt;a href=&quot;https://github.com/creationix/nvm&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;nvm&lt;/a&gt;安装多个node版本，不过因为以前用RVM做ruby版本控制有点阴影，所以就罢了，反正一个版本也够用了。&lt;/p&gt;
+&lt;h2 id=&quot;WiiU破解&quot;&gt;&lt;a href=&quot;#WiiU破解&quot; class=&quot;headerlink&quot; title=&quot;WiiU破解&quot;&gt;&lt;/a&gt;WiiU破解&lt;/h2&gt;&lt;p&gt;本破解教程参考自&lt;a href=&quot;https://www.reddit.com/r/WiiUHacks/comments/4i4rv7/flimflam69s_551_kernel_exploit_guide_and_other/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;FlimFlam69’s 5.5.1 Kernel Exploit Guide (And other various things)&lt;/a&gt;&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h3 id=&quot;确认WiiU版本&quot;&gt;&lt;a href=&quot;#确认WiiU版本&quot; class=&quot;headerlink&quot; title=&quot;确认WiiU版本&quot;&gt;&lt;/a&gt;确认WiiU版本&lt;/h3&gt;&lt;p&gt;之前可以破解的最新版本是5.3.2， 现在可以将WiiU先升级到5.5.1版本。&lt;br&gt;如果看文章时最新版本已经超过5.5.1，请先确认是否支持破解再升级。&lt;/p&gt;
+&lt;h2 id=&quot;屏蔽自动升级&quot;&gt;&lt;a href=&quot;#屏蔽自动升级&quot; class=&quot;headerlink&quot; title=&quot;屏蔽自动升级&quot;&gt;&lt;/a&gt;屏蔽自动升级&lt;/h2&gt;&lt;p&gt;为了防止任天堂升级内核补漏洞，需要将WiiU的自动升级屏蔽，有以下两个方式&lt;/p&gt;
+&lt;h3 id=&quot;1-修改DNS&quot;&gt;&lt;a href=&quot;#1-修改DNS&quot; class=&quot;headerlink&quot; title=&quot;1.修改DNS&quot;&gt;&lt;/a&gt;1.修改DNS&lt;/h3&gt;&lt;p&gt;在WiiU的Internet设置中修改DNS相关设置&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Turn Auto-Obtain DNS &lt;strong&gt;OFF&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Set Primary DNS to &lt;strong&gt;107.211.140.065&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Set Secondary DNS to &lt;strong&gt;107.211.140.065&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;修改完DNS以后，WiiU无法解析服务器地址，就无法自动升级了，但是也登陆不了eShop了，原贴中有相关解决方案。同时也看不了Youtube，这对墙内的同学来说也没什么区别。&lt;/p&gt;
+&lt;h3 id=&quot;2-屏蔽URL&quot;&gt;&lt;a href=&quot;#2-屏蔽URL&quot; class=&quot;headerlink&quot; title=&quot;2.屏蔽URL&quot;&gt;&lt;/a&gt;2.屏蔽URL&lt;/h3&gt;&lt;p&gt;类似修改hosts文件，在路由器中将如下地址给屏蔽掉&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;nus.cdn.c.shop.nintendowifi.net&lt;/li&gt;
+&lt;li&gt;nus.cdn.shop.wii.com&lt;/li&gt;
+&lt;li&gt;nus.cdn.wup.shop.nintendo.net&lt;/li&gt;
+&lt;li&gt;nus.wup.shop.nintendo.net&lt;/li&gt;
+&lt;li&gt;nus.c.shop.nintendowifi.net&lt;/li&gt;
+&lt;li&gt;c.shop.nintendowifi.net&lt;/li&gt;
+&lt;li&gt;cbvc.cdn.nintendo.net&lt;/li&gt;
+&lt;li&gt;cbvc.nintendo.net&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;因为是在路由器中屏蔽的，如果同时有3DS或者其他任天堂机器连在同一个wifi中，也一样登陆不了相关商店。&lt;/p&gt;
+&lt;h3 id=&quot;关闭自动升级&quot;&gt;&lt;a href=&quot;#关闭自动升级&quot; class=&quot;headerlink&quot; title=&quot;关闭自动升级&quot;&gt;&lt;/a&gt;关闭自动升级&lt;/h3&gt;&lt;p&gt;注意在View Mac Address下面还有一个&lt;strong&gt;Automatic Software Downloads&lt;/strong&gt;的选项注意设置为Disable。&lt;/p&gt;
+&lt;h2 id=&quot;配置SD卡&quot;&gt;&lt;a href=&quot;#配置SD卡&quot; class=&quot;headerlink&quot; title=&quot;配置SD卡&quot;&gt;&lt;/a&gt;配置SD卡&lt;/h2&gt;&lt;p&gt;现在破解只支持SD卡，还不支持外置硬盘，所以需要购置一块SD卡。&lt;br&gt;据说支持128G SDXC，我觉得没必要，用的是64G SDXC TF卡（插卡套），确认可支持。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;格式化SD卡为FAT32。（Mac下做格式化会有问题，我是通过vmware虚拟windows做的）&lt;/li&gt;
+&lt;li&gt;下载最新 &lt;a href=&quot;https://github.com/dimok789/homebrew_launcher/releases&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Homebrew Launcher&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;下载最新 &lt;a href=&quot;https://github.com/dimok789/loadiine_gx2/releases&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Loadiine GX2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;解压上面下载的2个文件，将文件对应以下路径拷贝到SD卡中&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;SD:/wiiu/apps/homebrew_launcher/homebrew_launcher.elf&lt;/li&gt;
+&lt;li&gt;SD:/wiiu/apps/homebrew_launcher/icon.png&lt;/li&gt;
+&lt;li&gt;SD:/wiiu/apps/homebrew_launcher/meta.xml&lt;/li&gt;
+&lt;li&gt;SD:/wiiu/apps/loadiine_gx2/loadiine_gx2.elf&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;下载的游戏放在如下路径&lt;br&gt;&lt;strong&gt;SD:/wiiu/games/Example Game [GAMEID]&lt;/strong&gt;&lt;br&gt;如果下载的游戏没有GAMEID，可以去&lt;a href=&quot;http://www.gametdb.com/WiiU&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GameTDB&lt;/a&gt;查询。&lt;br&gt;游戏资源自己网上搜吧。&lt;/p&gt;
+&lt;h2 id=&quot;启动Kernel-Exploit&quot;&gt;&lt;a href=&quot;#启动Kernel-Exploit&quot; class=&quot;headerlink&quot; title=&quot;启动Kernel Exploit&quot;&gt;&lt;/a&gt;启动Kernel Exploit&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;将SD卡插入WiiU卡槽&lt;/li&gt;
+&lt;li&gt;打开WiiU,打开内置浏览器&lt;/li&gt;
+&lt;li&gt;删除Cookies(Delete Cookies)&lt;/li&gt;
+&lt;li&gt;打开地址&lt;a href=&quot;http://loadiine.ovh/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://loadiine.ovh/&lt;/a&gt; （建议加入收藏夹）&lt;/li&gt;
+&lt;li&gt;国内打开可能有点慢，页面加载完毕后点击下拉菜单右边的绿色按钮。&lt;/li&gt;
+&lt;li&gt;如果之前的配置都没有问题，等待片刻（也可能比较久），就会进入Homebrew.(如果白屏不动了请重启WiiU再次操作)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;配置启动服务器&quot;&gt;&lt;a href=&quot;#配置启动服务器&quot; class=&quot;headerlink&quot; title=&quot;配置启动服务器&quot;&gt;&lt;/a&gt;配置启动服务器&lt;/h2&gt;&lt;p&gt;以后每次我们想玩的时候，必须打开&lt;a href=&quot;http://loadiine.ovh/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://loadiine.ovh/&lt;/a&gt;，但是因为网络条件，可能耗费的时间比较多，这时候我们可以自己搭设服务器来启动Homebrew.&lt;/p&gt;
+&lt;p&gt;网上有用XAMPP在Windows下架服务器的&lt;a href=&quot;http://gbatemp.net/threads/5-5-1-5-4-0-5-3-2-self-hosting-package-everything-in-one-zip-file.424679/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;教程&lt;/a&gt;，有兴趣的可以去尝试。&lt;/p&gt;
+&lt;p&gt;Mac的话也差不多，有空研究一下更新文章。&lt;/p&gt;
+&lt;h2 id=&quot;最后&quot;&gt;&lt;a href=&quot;#最后&quot; class=&quot;headerlink&quot; title=&quot;最后&quot;&gt;&lt;/a&gt;最后&lt;/h2&gt;&lt;p&gt;5.5/5.5.1版本的破解其实去年底就有消息了，拖到3月份发布者消息后也就不了了之了。&lt;br&gt;之后上个月任天堂发布NX的发售日程，WiiU的停产消息。&lt;br&gt;现在WiiU失守，另一(yin)方(mou)面(lun)也可以看做帮了任天堂，将WiiU变废为宝。相信接下来一段时间WiiU的销售会有一阵小高潮。&lt;br&gt;不过Loadiine目前还不支持online play，所以也无法体验到好多以在线为主的游戏。&lt;br&gt;最后还是希望大家支持正版，哈哈。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;题外话&quot;&gt;&lt;a href=&quot;#题外话&quot; class=&quot;headerlink&quot; title=&quot;题外话&quot;&gt;&lt;/a&gt;题外话&lt;/h2&gt;&lt;p&gt;自从node升了v6, hexo就沦陷了，到现在还没能支持。实在等不了了，只能node降级了。&lt;br&gt;当然也可以用&lt;a href=&quot;https://github.com/creationix/nvm&quot;&gt;nvm&lt;/a&gt;安装多个node版本，不过因为以前用RVM做ruby版本控制有点阴影，所以就罢了，反正一个版本也够用了。&lt;/p&gt;
+&lt;h2 id=&quot;WiiU破解&quot;&gt;&lt;a href=&quot;#WiiU破解&quot; class=&quot;headerlink&quot; title=&quot;WiiU破解&quot;&gt;&lt;/a&gt;WiiU破解&lt;/h2&gt;&lt;p&gt;本破解教程参考自&lt;a href=&quot;https://www.reddit.com/r/WiiUHacks/comments/4i4rv7/flimflam69s_551_kernel_exploit_guide_and_other/&quot;&gt;FlimFlam69’s 5.5.1 Kernel Exploit Guide (And other various things)&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>浅谈使用Json Web Token和Cookie的利弊</title>
